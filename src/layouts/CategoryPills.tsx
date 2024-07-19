@@ -1,6 +1,6 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "../components/Button";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 // import { categories } from "../data/home";
 
 type CategoryPillsProps = {
@@ -17,11 +17,30 @@ export function CategoryPills({
   onSelect,
 }: CategoryPillsProps) {
   const [translate, setTranslate] = useState(300);
-  const [isLeftVisible, setIsLeftVisible] = useState(true);
+  const [isLeftVisible, setIsLeftVisible] = useState(false);
   const [isRightVisible, setIsRightVisible] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (containerRef.current == null) return;
+    const observer = new ResizeObserver((entries) => {
+      const container = entries[0]?.target;
+      if (container == null) return;
+      setIsLeftVisible(translate > 0);
+      setIsRightVisible(
+        translate + container.clientWidth < container.scrollWidth
+      );
+    });
+
+    observer.observe(containerRef.current);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [categories, translate]);
+
   return (
-    <div className="overflow-x-hidden relative">
+    <div ref={containerRef} className="overflow-x-hidden relative">
       <div
         ref={containerRef}
         className="flex whitespace-nowrap gap-3 transition-transform w-[max-content]"
@@ -64,11 +83,16 @@ export function CategoryPills({
             className="h-full aspect-square w-auto p-1.5"
             onClick={() => {
               setTranslate((translate) => {
-                if (containerRef.current === null) return;
-                const newTranslate = translate - TRANSLATE_AMOUNT;
+                console.log(containerRef, translate);
+                if (containerRef.current === null) {
+                  return translate;
+                }
+                const newTranslate = translate + TRANSLATE_AMOUNT;
                 const edge = containerRef.current.scrollWidth;
-                if (newTranslate <= 0) return 0;
-                return newTranslate;
+                const width = containerRef.current.clientWidth;
+
+                if (newTranslate + width >= edge) return 0;
+                return edge - width;
               });
             }}
           >
