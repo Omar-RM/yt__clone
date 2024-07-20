@@ -1,0 +1,4 @@
+install
+
+npm i 
+npx tailwindcss init -p

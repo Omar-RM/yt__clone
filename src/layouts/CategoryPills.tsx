@@ -83,7 +83,6 @@ export function CategoryPills({
             className="h-full aspect-square w-auto p-1.5"
             onClick={() => {
               setTranslate((translate) => {
-                console.log(containerRef, translate);
                 if (containerRef.current === null) {
                   return translate;
                 }
@@ -91,8 +90,10 @@ export function CategoryPills({
                 const edge = containerRef.current.scrollWidth;
                 const width = containerRef.current.clientWidth;
 
-                if (newTranslate + width >= edge) return 0;
-                return edge - width;
+                if (newTranslate + width >= edge) {
+                  return edge - width;
+                }
+                return newTranslate;
               });
             }}
           >
