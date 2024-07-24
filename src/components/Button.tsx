@@ -16,7 +16,7 @@ export const buttonStyles = cva(
         ],
       },
       size: {
-        default: [],
+        default: ["rounded", "p-2"],
         icon: [
           "rounded-full",
           "w-10",

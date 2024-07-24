@@ -4,7 +4,10 @@ import {
   Clapperboard,
   Library,
   ChevronDown,
+  History,
   ChevronUp,
+  PlaySquare,
+  Clock,
 } from "lucide-react";
 import { Children, ElementType, ReactNode, useState } from "react";
 import { Button, buttonStyles } from "../components/Button";
@@ -26,7 +29,26 @@ export function Sidebar() {
       <aside className="w-56 lg:sticky absolute top-0 overflow-y-auto scrollbar-hidden pb-4 flex-col gap-2 px-2 flex">
         <LargeSidebarSection>
           <LargeSidebarItem isActive Icon={Home} title="Home" url="/" />
-          <LargeSidebarItem Icon={Home} title="Home" url="/" />
+          <LargeSidebarItem
+            Icon={Clapperboard}
+            title="Subscription"
+            url="/subscriptions"
+          />
+          <hr />
+          <LargeSidebarSection>
+            <LargeSidebarItem Icon={Library} title="Library" url="/library" />
+            <LargeSidebarItem Icon={History} title="History" url="/history" />
+            <LargeSidebarItem
+              Icon={PlaySquare}
+              title="Your Videos"
+              url="/your-videos"
+            />
+            <LargeSidebarItem
+              Icon={Clock}
+              title="Watch Later"
+              url="/playlist?list=WL"
+            />
+          </LargeSidebarSection>
         </LargeSidebarSection>
       </aside>
     </>
