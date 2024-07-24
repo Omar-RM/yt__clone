@@ -8,10 +8,12 @@ import {
   ChevronUp,
   PlaySquare,
   Clock,
+  ListVideo,
 } from "lucide-react";
 import { Children, ElementType, ReactNode, useState } from "react";
 import { Button, buttonStyles } from "../components/Button";
 import { twMerge } from "tailwind-merge";
+import { playlists } from "../data/sidebar";
 
 export function Sidebar() {
   return (
@@ -28,27 +30,47 @@ export function Sidebar() {
       </aside>
       <aside className="w-56 lg:sticky absolute top-0 overflow-y-auto scrollbar-hidden pb-4 flex-col gap-2 px-2 flex">
         <LargeSidebarSection>
-          <LargeSidebarItem isActive Icon={Home} title="Home" url="/" />
+          <LargeSidebarItem isActive IconOrImage={Home} title="Home" url="/" />
           <LargeSidebarItem
-            Icon={Clapperboard}
+            IconOrImage={Clapperboard}
             title="Subscription"
             url="/subscriptions"
           />
           <hr />
-          <LargeSidebarSection>
-            <LargeSidebarItem Icon={Library} title="Library" url="/library" />
-            <LargeSidebarItem Icon={History} title="History" url="/history" />
+        </LargeSidebarSection>
+        <LargeSidebarSection visibleItemCount={3}>
+          <LargeSidebarItem
+            IconOrImage={Library}
+            title="Library"
+            url="/library"
+          />
+          <LargeSidebarItem
+            IconOrImage={History}
+            title="History"
+            url="/history"
+          />
+          <LargeSidebarItem
+            IconOrImage={PlaySquare}
+            title="Your Videos"
+            url="/your-videos"
+          />
+          <LargeSidebarItem
+            IconOrImage={Clock}
+            title="Watch Later"
+            url="/playlist?list=WL"
+          />
+          {playlists.map((playlist) => (
             <LargeSidebarItem
-              Icon={PlaySquare}
-              title="Your Videos"
-              url="/your-videos"
+              key={playlist.id}
+              IconOrImage={ListVideo}
+              title={playlist.name}
+              url={`/playlist?list=${playlist.id}`}
             />
-            <LargeSidebarItem
-              Icon={Clock}
-              title="Watch Later"
-              url="/playlist?list=WL"
-            />
-          </LargeSidebarSection>
+          ))}
+        </LargeSidebarSection>
+        <hr />
+        <LargeSidebarSection title="Subscriptions">
+          <LargeSidebarItem IconOrImage={Library} url="url" title="Library" />
         </LargeSidebarSection>
       </aside>
     </>
@@ -117,13 +139,13 @@ function LargeSidebarSection({
 }
 
 type LargeSidebarItemProps = {
-  Icon: ElementType;
+  IconOrImage: ElementType | string;
   title: string;
   url: string;
   isActive?: boolean;
 };
 function LargeSidebarItem({
-  Icon,
+  IconOrImage,
   title,
   url,
   isActive = false,
@@ -138,7 +160,11 @@ function LargeSidebarItem({
         }`
       )}
     >
-      <Icon className="w-6 h-6" />
+      {typeof IconOrImage === "string" ? (
+        <img src={IconOrImage} className="w-6 h-6 rounded-full"></img>
+      ) : (
+        <IconOrImage className="w-6 h-6" />
+      )}
       <div className="whitespace-nowrap overflow-hidden text-ellipsis">
         {title}
       </div>
