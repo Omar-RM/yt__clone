@@ -26,7 +26,7 @@ export function Sidebar() {
       <aside className="w-56 lg:sticky absolute top-0 overflow-y-auto scrollbar-hidden pb-4 flex-col gap-2 px-2 flex">
         <LargeSidebarSection>
           <LargeSidebarItem isActive Icon={Home} title="Home" url="/" />
-          <LargeSidebarItem isActive Icon={Home} title="Home" url="/" />
+          <LargeSidebarItem Icon={Home} title="Home" url="/" />
         </LargeSidebarSection>
       </aside>
     </>
@@ -62,21 +62,25 @@ type LargeSidebarSectionProps = {
 
 function LargeSidebarSection({
   children,
+
   title,
   visibleItemCount = Number.POSITIVE_INFINITY,
 }: LargeSidebarSectionProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+
   const childrenArray = Children.toArray(children).flat();
   const visibleChildren = isExpanded
     ? childrenArray
     : childrenArray.slice(0, visibleItemCount);
-  const showExpendButton = childrenArray.length > visibleItemCount;
+
+  const showExpandButton = childrenArray.length > visibleItemCount;
   const ButtonIcon = isExpanded ? ChevronUp : ChevronDown;
+
   return (
     <div>
       {title && <div className="ml-4 mt-2 text-lg mb-1">{title}</div>}
       {visibleChildren}
-      {showExpendButton && (
+      {showExpandButton && (
         <Button
           onClick={() => setIsExpanded((e) => !e)}
           variant="ghost"
