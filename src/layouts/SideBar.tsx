@@ -9,11 +9,22 @@ import {
   PlaySquare,
   Clock,
   ListVideo,
+  Flame,
+  Music2,
+  ShoppingBag,
+  Film,
+  Radio,
+  Gamepad2,
+  Newspaper,
+  Trophy,
+  Lightbulb,
+  Shirt,
+  Podcast,
 } from "lucide-react";
 import { Children, ElementType, ReactNode, useState } from "react";
 import { Button, buttonStyles } from "../components/Button";
 import { twMerge } from "tailwind-merge";
-import { playlists } from "../data/sidebar";
+import { playlists, subscriptions } from "../data/sidebar";
 
 export function Sidebar() {
   return (
@@ -70,7 +81,56 @@ export function Sidebar() {
         </LargeSidebarSection>
         <hr />
         <LargeSidebarSection title="Subscriptions">
-          <LargeSidebarItem IconOrImage={Library} url="url" title="Library" />
+          {subscriptions.map((subscription) => (
+            <LargeSidebarItem
+              key={subscription.id}
+              IconOrImage={subscription.imgUrl}
+              url={`@/${subscription.id}`}
+              title={subscription.channelName}
+            />
+          ))}
+        </LargeSidebarSection>
+        <hr />
+        <LargeSidebarSection title="Explore">
+          <LargeSidebarItem
+            IconOrImage={Flame}
+            title="Trending"
+            url="/trending"
+          />
+          <LargeSidebarItem
+            IconOrImage={ShoppingBag}
+            title="Shopping"
+            url="/shopping"
+          />
+          <LargeSidebarItem IconOrImage={Music2} title="Music" url="/music" />
+          <LargeSidebarItem
+            IconOrImage={Film}
+            title="Movies & TV"
+            url="/movies-tv"
+          />
+          <LargeSidebarItem IconOrImage={Radio} title="Live" url="/live" />
+          <LargeSidebarItem
+            IconOrImage={Gamepad2}
+            title="Gaming"
+            url="/gaming"
+          />
+          <LargeSidebarItem IconOrImage={Newspaper} title="News" url="/news" />
+          <LargeSidebarItem IconOrImage={Trophy} title="Sports" url="/sports" />
+          <LargeSidebarItem
+            IconOrImage={Lightbulb}
+            title="Learning"
+            url="/learning"
+          />
+          <LargeSidebarItem
+            IconOrImage={Shirt}
+            title="Fashion & Beauty"
+            url="/fashion-beauty"
+          />
+          <LargeSidebarItem
+            IconOrImage={Podcast}
+            title="Podcast"
+            url="/podcast"
+          />
         </LargeSidebarSection>
       </aside>
     </>
