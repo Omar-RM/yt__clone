@@ -74,10 +74,12 @@ export const PageHeader = () => {
 };
 
 type PageHeaderFirstSectionProps = {
-  hidden: boolean;
+  hidden?: boolean;
 };
 
-function PageHeaderFirstSection({ hidden }: PageHeaderFirstSectionProps) {
+export function PageHeaderFirstSection({
+  hidden = false,
+}: PageHeaderFirstSectionProps) {
   const { toggle } = useSidebarContext();
 
   return (
