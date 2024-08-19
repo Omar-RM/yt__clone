@@ -20,3 +20,46 @@ class Solution {
        return false;
     }
 }
+
+
+///LeetCode No. 3
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        /*
+        int maxLength = 0;
+        Map<Character , Integer> m = new  HashMap<>();
+        for(int right = 0, left=0 ; right< s.length(); right++){
+            char currentChar = s.charAt(right);
+            if(m.containsKey(currentChar) && m.get(currentChar)>=left){
+                left = m.get(currentChar) +1;
+            }
+            maxLength = Math.max(maxLength, right-left+1);
+            m.put(currentChar, right);
+            
+        }
+        return maxLength;
+        */
+        //Max substring length
+        int maxLength= 0;
+
+        //2 Pointers
+        // right: final substring.
+        // left: start of substring.
+        for(int right =0 , left =0  ;right<s.length(); right++){
+
+            // find the index of char starting from left pointer
+            int indexFirstAppearance = s.indexOf(s.charAt(right), left);
+
+            // if index is  not equal to right
+            if(indexFirstAppearance != right){
+
+                //left will be the index + 1
+                left=indexFirstAppearance +1;
+            }
+
+            //Find the max by comparing the different between wight and left plus 1 
+            maxLength = Math.max(maxLength , right-left+1);
+        }
+        return maxLength;
+    }
+}
