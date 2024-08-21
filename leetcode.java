@@ -117,3 +117,34 @@ class Solution {
     }
 
 }
+
+// LeetCode 13 - Roman to Integer 
+
+class Solution {
+    public int romanToInt(String s) {
+        HashMap<Character, Integer> map = new HashMap<>();// ----> HashMap to populate with Roman Characters
+        map.put('I', 1);
+        map.put('V', 5);
+        map.put('X', 10);
+        map.put('L', 50);
+        map.put('C', 100);
+        map.put('D', 500);
+        map.put('M', 1000);
+
+        int x = map.get(s.charAt(s.length() - 1));// -----------------> Get last element value form the string.
+
+        for (int i = s.length() - 2; i >= 0; i--) {// ------------------> Array started 2 char before end
+
+            char current = s.charAt(i), previous = s.charAt(i + 1);
+
+            if (map.get(current) < map.get(previous)) {// ----------------> If current value is equal to previus value
+                x -= map.get(current);// -------------------------------> Substract current value from x
+            }
+
+            else {
+                x += map.get(current);// -------------------------------> Else add current value to x
+            }
+        }
+        return x;
+    }
+}
