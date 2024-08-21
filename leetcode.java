@@ -105,7 +105,7 @@ class Solution {
         if (nums.length < 3) return nums.length;//----> If array is short then return length.
             
 
-        int index = 2;//--------------------------------->  
+        int index = 2;
 
         for (int i = 2; i < nums.length; i++) {
             if (nums[i] != nums[index - 2]) {//----------> Check if current index not is equal to in value n[index-2]
